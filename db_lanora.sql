@@ -94,7 +94,9 @@ CREATE TABLE `clientes` (
   `idClientes` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `documento` varchar(20) NOT NULL,
-  `dataCadastro` date DEFAULT NULL
+  `dataCadastro` date DEFAULT NULL,
+  `email` varchar(80) NOT NULL,
+  `senha` varchar(45) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
