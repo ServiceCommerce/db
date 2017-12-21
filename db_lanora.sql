@@ -70,7 +70,22 @@ INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activ
 ('e72ba38a12d5b456746fe94846563cb0', '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36', 1513789921, 'a:8:{s:9:"user_data";s:0:"";s:4:"nome";s:13:"Administrador";s:2:"id";s:1:"1";s:9:"permissao";s:1:"1";s:6:"logado";b:1;s:12:"dataCadastro";s:10:"2017-10-21";s:7:"profile";s:0:"";s:17:"flash:old:success";s:8:"Clie-001";}');
 
 -- --------------------------------------------------------
+-- --------------------------------------------------------
 
+--
+-- Estrutura da tabela `ci_sessions`
+--
+
+CREATE TABLE IF NOT EXISTS `ci_client_sessions` (
+        `id` varchar(128) NOT NULL,
+        `ip_address` varchar(45) NOT NULL,
+        `timestamp` int(10) unsigned DEFAULT 0 NOT NULL,
+        `data` blob NOT NULL,
+        KEY `ci_sessions_timestamp` (`timestamp`)
+);
+
+
+-- --------------------------------------------------------
 --
 -- Estrutura da tabela `clientes`
 --
