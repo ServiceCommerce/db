@@ -17,8 +17,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `teste-serralheria`
---
+-- Database	: `db_lanora`
+-- Versão	: 1.0 -> 1.1
 
 -- --------------------------------------------------------
 
@@ -31,7 +31,7 @@ CREATE TABLE `db_Version` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 INSERT INTO `db_Version` (`version`) VALUES
-('1.0');
+('1.1');
 
 -- --------------------------------------------------------
 
@@ -40,7 +40,7 @@ INSERT INTO `db_Version` (`version`) VALUES
 --
 
 CREATE TABLE `categoria_produto` (
-  `idCategoria_prod` int(11) NOT NULL,
+  `idCategoria_prod` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   `descricao` text NOT NULL,
   `exibir` varchar(2) DEFAULT NULL
@@ -77,7 +77,7 @@ INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activ
 --
 
 CREATE TABLE IF NOT EXISTS `ci_client_sessions` (
-        `id` varchar(128) NOT NULL,
+        `id` varchar(128) NOT NULL AUTO_INCREMENT,
         `ip_address` varchar(45) NOT NULL,
         `timestamp` int(10) unsigned DEFAULT 0 NOT NULL,
         `data` blob NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `ci_client_sessions` (
 --
 
 CREATE TABLE `clientes` (
-  `idClientes` int(11) NOT NULL,
+  `idClientes` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `documento` varchar(20) NOT NULL,
   `dataCadastro` date DEFAULT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE `clientes` (
 --
 
 CREATE TABLE `contato` (
-  `idContato` int(11) NOT NULL,
+  `idContato` int(11) NOT NULL AUTO_INCREMENT,
   `telefone` varchar(20) NOT NULL,
   `email` varchar(100) NOT NULL,
   `clientes_id` int(11) NOT NULL
@@ -121,7 +121,7 @@ CREATE TABLE `contato` (
 --
 
 CREATE TABLE `emitente` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) DEFAULT NULL,
   `cnpj` varchar(45) DEFAULT NULL,
   `ie` varchar(50) DEFAULT NULL,
@@ -143,7 +143,7 @@ CREATE TABLE `emitente` (
 --
 
 CREATE TABLE `endereco` (
-  `idEndereco` int(11) NOT NULL,
+  `idEndereco` int(11) NOT NULL AUTO_INCREMENT,
   `rua` varchar(100) NOT NULL,
   `numero` varchar(20) NOT NULL,
   `bairro` varchar(100) NOT NULL,
@@ -161,7 +161,7 @@ CREATE TABLE `endereco` (
 --
 
 CREATE TABLE `imagem_produto` (
-  `idImg_prod` int(11) NOT NULL,
+  `idImg_prod` int(11) NOT NULL AUTO_INCREMENT,
   `nomeImagem` varchar(70) COLLATE utf8_unicode_ci DEFAULT NULL,
   `descricao` text COLLATE utf8_unicode_ci,
   `tipo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -179,7 +179,7 @@ CREATE TABLE `imagem_produto` (
 --
 
 CREATE TABLE `permissoes` (
-  `idPermissao` int(11) NOT NULL,
+  `idPermissao` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
   `permissoes` text COLLATE utf8_unicode_ci,
   `situacao` tinyint(1) DEFAULT NULL,
@@ -223,7 +223,7 @@ CREATE TABLE `pessoa_juridica` (
 --
 
 CREATE TABLE `produtos` (
-  `idProdutos` int(11) NOT NULL,
+  `idProdutos` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) NOT NULL,
   `descricao` varchar(80) NOT NULL,
   `unidade` varchar(10) DEFAULT NULL,
@@ -245,7 +245,7 @@ CREATE TABLE `produtos` (
 --
 
 CREATE TABLE `usuarios` (
-  `idUsuarios` int(11) NOT NULL,
+  `idUsuarios` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(80) NOT NULL,
   `email` varchar(80) NOT NULL,
   `senha` varchar(45) NOT NULL,
