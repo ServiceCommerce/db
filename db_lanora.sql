@@ -31,7 +31,7 @@ CREATE TABLE `db_Version` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 INSERT INTO `db_Version` (`version`) VALUES
-('1.1');
+('1.0');
 
 -- --------------------------------------------------------
 
@@ -43,7 +43,8 @@ CREATE TABLE `categoria_produto` (
   `idCategoria_prod` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   `descricao` text NOT NULL,
-  `exibir` varchar(2) DEFAULT NULL
+  `exibir` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`idCategoria_prod`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
@@ -58,7 +59,9 @@ CREATE TABLE `ci_sessions` (
   `ip_address` varchar(45) NOT NULL DEFAULT '0',
   `user_agent` varchar(120) NOT NULL,
   `last_activity` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `user_data` text NOT NULL
+  `user_data` text NOT NULL,
+  PRIMARY KEY (`session_id`),
+  KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -77,7 +80,7 @@ INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activ
 --
 
 CREATE TABLE IF NOT EXISTS `ci_client_sessions` (
-        `id` varchar(128) NOT NULL AUTO_INCREMENT,
+        `id` varchar(128) NOT NULL,
         `ip_address` varchar(45) NOT NULL,
         `timestamp` int(10) unsigned DEFAULT 0 NOT NULL,
         `data` blob NOT NULL,
@@ -96,7 +99,8 @@ CREATE TABLE `clientes` (
   `documento` varchar(20) NOT NULL,
   `dataCadastro` date DEFAULT NULL,
   `email` varchar(80) NOT NULL,
-  `senha` varchar(45) NOT NULL
+  `senha` varchar(45) NOT NULL,
+  PRIMARY KEY (`idClientes`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
@@ -110,7 +114,8 @@ CREATE TABLE `contato` (
   `idContato` int(11) NOT NULL AUTO_INCREMENT,
   `telefone` varchar(20) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `clientes_id` int(11) NOT NULL
+  `clientes_id` int(11) NOT NULL,
+  PRIMARY KEY (`idContato`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
@@ -132,7 +137,8 @@ CREATE TABLE `emitente` (
   `uf` varchar(20) DEFAULT NULL,
   `telefone` varchar(20) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `url_logo` varchar(225) DEFAULT NULL
+  `url_logo` varchar(225) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -150,7 +156,8 @@ CREATE TABLE `endereco` (
   `cep` varchar(20) NOT NULL,
   `cidade` varchar(100) NOT NULL,
   `estado` varchar(20) NOT NULL,
-  `clientes_id` int(11) NOT NULL
+  `clientes_id` int(11) NOT NULL,
+  PRIMARY KEY (`idEndereco`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
@@ -168,7 +175,10 @@ CREATE TABLE `imagem_produto` (
   `url` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cadastro` date DEFAULT NULL,
   `categoria_prod_id` int(11) NOT NULL,
-  `produtos_id` int(11) NOT NULL
+  `produtos_id` int(11) NOT NULL,
+  PRIMARY KEY (`idImg_prod`),
+  KEY `fk_categoria_produto` (`Categoria_prod_id`),
+  KEY `fk_produtos` (`produtos_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -183,7 +193,8 @@ CREATE TABLE `permissoes` (
   `nome` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
   `permissoes` text COLLATE utf8_unicode_ci,
   `situacao` tinyint(1) DEFAULT NULL,
-  `data` date DEFAULT NULL
+  `data` date DEFAULT NULL,
+  PRIMARY KEY (`idPermissao`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -201,8 +212,9 @@ INSERT INTO `permissoes` (`idPermissao`, `nome`, `permissoes`, `situacao`, `data
 CREATE TABLE `pessoa_fisica` (
   `nome` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cpf` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `clientes_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `clientes_id` int(11) NOT NULL,
+   KEY `fk_pessoa_fisica_clientes1` (`clientes_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -213,8 +225,9 @@ CREATE TABLE `pessoa_fisica` (
 CREATE TABLE `pessoa_juridica` (
   `nome` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cnpj` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `clientes_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `clientes_id` int(11) NOT NULL,
+   KEY `fk_pessoa_juridica_clientes1` (`clientes_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -234,7 +247,9 @@ CREATE TABLE `produtos` (
   `aPartir` tinyint(1) DEFAULT NULL,
   `semEstoque` tinyint(1) NOT NULL,
   `categoria_prod_id` int(11) DEFAULT NULL,
-  `exibir` varchar(2) DEFAULT NULL
+  `exibir` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`idProdutos`),
+  KEY `fk_categoria_produto`(`Categoria_prod_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
@@ -254,7 +269,9 @@ CREATE TABLE `usuarios` (
   `nivel` int(11) NOT NULL,
   `user_img` varchar(150) NOT NULL,
   `img_url` varchar(300) DEFAULT NULL,
-  `permissoes_id` int(11) NOT NULL
+  `permissoes_id` int(11) NOT NULL,
+  PRIMARY KEY (`idUsuarios`),
+  KEY `fk_usuarios_permissoes1_idx` (`permissoes_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -263,83 +280,3 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`idUsuarios`, `nome`, `email`, `senha`, `situacao`, `dataCadastro`, `nivel`, `user_img`, `img_url`, `permissoes_id`) VALUES
 (1, 'Administrador', 'admin@admin.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, '2017-10-21', 1, 'Profile', '', 1);
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `categoria_produto`
---
-ALTER TABLE `categoria_produto`
-  ADD PRIMARY KEY (`idCategoria_prod`);
-
---
--- Indexes for table `ci_sessions`
---
-ALTER TABLE `ci_sessions`
-  ADD PRIMARY KEY (`session_id`),
-  ADD KEY `last_activity_idx` (`last_activity`);
-
---
--- Indexes for table `clientes`
---
-ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`idClientes`);
-
---
--- Indexes for table `contato`
---
-ALTER TABLE `contato`
-  ADD PRIMARY KEY (`idContato`);
-
---
--- Indexes for table `emitente`
---
-ALTER TABLE `emitente`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `endereco`
---
-ALTER TABLE `endereco`
-  ADD PRIMARY KEY (`idEndereco`);
-
---
--- Indexes for table `imagem_produto`
---
-ALTER TABLE `imagem_produto`
-  ADD PRIMARY KEY (`idImg_prod`),
-  ADD KEY `fk_categoria_produto` (`categoria_prod_id`),
-  ADD KEY `fk_produtos` (`produtos_id`);
-
---
--- Indexes for table `permissoes`
---
-ALTER TABLE `permissoes`
-  ADD PRIMARY KEY (`idPermissao`);
-
---
--- Indexes for table `pessoa_fisica`
---
-ALTER TABLE `pessoa_fisica`
-  ADD KEY `fk_pessoa_fisica_clientes1` (`clientes_id`);
-
---
--- Indexes for table `pessoa_juridica`
---
-ALTER TABLE `pessoa_juridica`
-  ADD KEY `fk_pessoa_juridica_clientes1` (`clientes_id`);
-
---
--- Indexes for table `produtos`
---
-ALTER TABLE `produtos`
-  ADD PRIMARY KEY (`idProdutos`),
-  ADD KEY `fk_categoria_produto` (`categoria_prod_id`);
-
---
--- Indexes for table `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`idUsuarios`),
-  ADD KEY `fk_usuarios_permissoes1_idx` (`permissoes_id`);
