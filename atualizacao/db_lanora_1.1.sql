@@ -22,4 +22,7 @@ ALTER TABLE `clientes` ADD (
 		`senha` varchar(45) NOT NULL
 );
 
-
+ALTER TABLE `db_version` ADD (
+		`id` int(11) NOT NULL AUTO_INCREMENT FIRST,
+        PRIMARY KEY (`id`)
+);
