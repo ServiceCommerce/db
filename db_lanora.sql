@@ -27,11 +27,16 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `db_Version` (
-  `version` varchar(20) DEFAULT NULL
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` varchar(20) DEFAULT NULL,
+  `data` DATE DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-INSERT INTO `db_Version` (`version`) VALUES
-('1.0');
+INSERT INTO `db_Version` (`id`,`version`,`data`) VALUES
+(1, '1.0', '2017-12-19'),
+(2, '1.1', '2017-12-29');
+
 
 -- --------------------------------------------------------
 
